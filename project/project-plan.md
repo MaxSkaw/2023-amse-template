@@ -19,7 +19,7 @@ By examining the effects of rainfall on speeding, the research project can provi
 * Data URL: https://offenedaten-koeln.de/dataset/geschwindigkeitsueberwachung-koeln
 * Data Type: CSV
 
-This dataset includes all speed monitoring data from Cologne from 2017 to 2018.
+This dataset includes all speed monitoring data from Cologne between 2017 and 2018.
 
 ### Datasource2: Wetterrückblick und Klimadaten Koeln
 * Metadata URL: https://meteostat.net/de/place/de/koln
