@@ -32,7 +32,15 @@ This dataset includes all weather and precipitation data from Cologne between 20
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
-1. Example Issue [#1][i1]
-2. ...
+1. Extract and format data [#1][i1]
+2. Merge data sets [#2][i2]
+3. Data manipulation and correlation identification [#3][i3]
+4. Analysis of the results [#4][i4]
+5. Interpretation and summary [#5][i5]
+6. ...[#5][i5]
 
-[i1]: https://github.com/jvalue/2023-amse-template/issues/1
+[i1]: https://github.com/MaxSkaw/2023-amse-template/issues/1
+[i2]: https://github.com/MaxSkaw/2023-amse-template/issues/2
+[i3]: https://github.com/MaxSkaw/2023-amse-template/issues/3
+[i4]: https://github.com/MaxSkaw/2023-amse-template/issues/4
+[i5]: https://github.com/MaxSkaw/2023-amse-template/issues/5
