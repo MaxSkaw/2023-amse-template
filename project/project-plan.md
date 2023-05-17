@@ -3,7 +3,7 @@
 ## Summary
 
 <!-- Describe your data science project in max. 5 sentences. -->
-This project analyzes the impact of rainfall on speeding based on data sets collected in Cologne from 2017 to 2018. For this purpose, the correlation between total daily precipitation and the number (and possibly amount) of speeding violations is investigated.
+This project analyzes the impact of rainfall on speeding based on data sets collected in Cologne from 2017 to 2021. For this purpose, the correlation between total daily precipitation and the number (and possibly amount) of speeding violations is investigated.
 
 ## Rationale
 
@@ -16,17 +16,17 @@ By examining the effects of rainfall on speeding, the research project can provi
 
 ### Datasource1: Geschwindigkeitsueberwachung Koeln
 * Metadata URL: https://mobilithek.info/offers/-8862870771136450928
-* Data URL: https://offenedaten-koeln.de/dataset/geschwindigkeitsueberwachung-koeln
+* Data URL: https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv
 * Data Type: CSV
 
-This dataset includes all speed monitoring data from Cologne between 2017 and 2018.
+This dataset includes all speed monitoring data from Cologne between 2017 and 2021.
 
 ### Datasource2: Wetterrückblick und Klimadaten Koeln
 * Metadata URL: https://meteostat.net/de/place/de/koln
-* Data URL: https://meteostat.net/de/place/de/koln?s=D2968&t=2017-01-01/2018-12-31
+* Data URL: https://meteostat.net/de/place/de/koln?s=D2968&t=2017-01-01/2021-12-31
 * Data Type: CSV
 
-This dataset includes all weather and precipitation data from Cologne between 2017 and 2018.
+This dataset includes all weather and precipitation data from Cologne between 2017 and 2021.
 
 ## Work Packages
 
@@ -37,7 +37,7 @@ This dataset includes all weather and precipitation data from Cologne between 20
 3. Data manipulation and correlation identification [#3][i3]
 4. Analysis of the results [#4][i4]
 5. Interpretation and summary [#5][i5]
-6. ...[#5][i5]
+6. ...
 
 [i1]: https://github.com/MaxSkaw/2023-amse-template/issues/1
 [i2]: https://github.com/MaxSkaw/2023-amse-template/issues/2
