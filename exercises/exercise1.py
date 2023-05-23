@@ -12,7 +12,7 @@ column_types = {
     'column_2': Text,
     'column_3': Text,
     'column_4': Text,
-    'column_5': Integer,
+    'column_5': Text,
     'column_6': Text,
     'column_7': Float,
     'column_8': Float,
