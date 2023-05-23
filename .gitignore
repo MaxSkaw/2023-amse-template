@@ -1,3 +1,4 @@
 *.csv
 speed.sqlite
 weather.sqlite
+airports.sqlite
