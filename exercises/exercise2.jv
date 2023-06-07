@@ -1,0 +1,92 @@
+valuetype Verkehr oftype text {
+	constraints: [
+		VerkehrValues,
+	];
+}
+
+valuetype Laenge oftype decimal {
+	constraints: [
+		GeographicScale,
+	];
+}
+
+valuetype Breite oftype decimal {
+	constraints: [
+		GeographicScale,
+	];
+}
+
+valuetype IFOPT oftype text {
+	constraints: [
+		IFOPT_Format,
+	];
+}
+
+valuetype NoEmptyText oftype text {
+	constraints: [
+		NoEmpty,
+	];
+}
+
+constraint VerkehrValues oftype AllowlistConstraint {
+  allowlist: ["FV", "RV", "nur DPN"];
+}
+
+constraint GeographicScale oftype RangeConstraint {
+  lowerBound: -90;
+  upperBound: 90;      
+}
+
+constraint IFOPT_Format oftype RegexConstraint {
+  regex: /[a-z]{2}:\d+:\d+(:\d+)?/;
+}
+
+constraint NoEmpty oftype DenylistConstraint {
+  denylist: [""];
+}
+
+
+pipeline TrainstopsPipeline {
+
+    block TrainstopsFileExtractor oftype HttpExtractor {
+        url: "https://download-data.deutschebahn.com/static/datasets/haltestellen/D_Bahnhof_2020_alle.CSV";
+    }
+
+    block TrainstopsTextFileInterpreter oftype TextFileInterpreter {}
+
+    block TrainstopsCSVInterpreter oftype CSVInterpreter {  
+    delimiter: ";";
+    }
+
+    block TrainstopsColumnDeleter oftype ColumnDeleter {
+        delete: [column J];
+    }
+
+    block TrainstopsTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+        "EVA_NR" oftype integer,
+        "DS100" oftype NoEmptyText,
+        "IFOPT" oftype IFOPT,
+        "NAME" oftype NoEmptyText,
+        "Verkehr" oftype Verkehr,
+        "Laenge" oftype Laenge,
+        "Breite" oftype Breite,
+        "Betreiber_Name" oftype NoEmptyText,
+        "Betreiber_Nr" oftype integer,
+        "Status" oftype NoEmptyText,
+        ];
+    }
+    block TrainstopsLoader oftype SQLiteLoader {
+        table: "Trainstops";
+        file: "./trainstops.sqlite";
+    }
+
+
+    TrainstopsFileExtractor
+        -> TrainstopsTextFileInterpreter
+        -> TrainstopsCSVInterpreter
+        -> TrainstopsColumnDeleter
+        -> TrainstopsTableInterpreter
+        -> TrainstopsLoader;
+}
