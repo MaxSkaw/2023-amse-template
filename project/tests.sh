@@ -1,8 +1,9 @@
-echo === Start Pipeline ===
-python ../data/pipeline.py
-echo === Begin testing ===
+echo "=== Start Pipeline ==="
+python data/pipeline.py
 
-echo === Checking for databases ===
-python test.py
+echo "=== Begin testing ==="
 
-echo === Testing finished ===
+echo "=== Checking for databases ==="
+python project/test.py
+
+echo "=== Testing finished ==="
