@@ -1,0 +1,35 @@
+name: GitHub Push Tests
+run-name: Running Push Tests by ${{ github.actor }}
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # Install python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+          
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+        
+      - name: Check for tests.sh script
+        run: |
+          if [ -f ./project/tests.sh ]; then
+            echo "Found tests.sh script"
+          else
+            echo "tests.sh script not found"
+            exit 1
+          fi
+
+      - name: Run tests.sh script
+        run: |
+          chmod +x ./project/tests.sh
+          ./project/tests.sh
