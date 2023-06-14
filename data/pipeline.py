@@ -6,13 +6,18 @@ from meteostat import Stations, Daily
 
 #-- SPEED --#
 
+### Datasource 1: Speed Monitoring Cologne
 # First datasource from URL: https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv
 
-speed = pd.read_csv('https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv', sep=';', skiprows=1,names=['Jahr ','Monat ','vorfallsdatum','vorfallsuhrzeit','Ortskürzel','geschwindigkeit','ueberschreitung','fahrzeugart','standort','garbage1','garbage2'])
+speed = pd.read_csv('https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv', \
+    sep=';', skiprows=1, \
+        names=['year','month','unformatted_date','incident_time','location_code','speed','excessive_speed','vehicle_type','location','garbage_1','garbage_2'], \
+            dtype={0: int, 1: int, 2: int, 3: int, 4: str, 5: str, 6: str, 7: str, 8: str, 9: str, 10: str})
 
 
 #-- WEATHER --#
 
+### Datasource 2: Weather Review and Climate Data Cologne
 # Second datasource from URL: https://meteostat.net/de/place/de/koln?s=D2968&t=2017-01-01/2021-12-31
 # We use a designated Python module instead, because there is no online download link
 
@@ -30,21 +35,21 @@ end_date = '2021-12-31'
 weather = Daily(station_id, start=start_date, end=end_date)
 weather = weather.fetch()
 
+
 #----------- Data Manipulation -----------#
 
 #-- SPEED --#
 
 # Formatting of date
-speed['vorfallsdatum'] = speed['vorfallsdatum'].astype(str)
-valid_indices = speed['vorfallsdatum'].str.match(r'^\d{1,2}\d{4}$').fillna(False)
-speed.loc[valid_indices, 'vorfallsdatum'] = speed.loc[valid_indices, 'vorfallsdatum'].str.zfill(6)
+speed['unformatted_date'] = speed['unformatted_date'].astype(str)
+valid_indices = speed['unformatted_date'].str.match(r'^\d{1,2}\d{4}$').fillna(False)
+speed.loc[valid_indices, 'unformatted_date'] = speed.loc[valid_indices, 'unformatted_date'].str.zfill(6)
+speed["date"] = speed["year"].astype(str) + "-" + speed["month"].astype(str) + "-" + speed["unformatted_date"].astype(str).str[:2]
 
 # Dataset formatting
-speed["date"] = speed["Jahr "].astype(str) + "-" + speed["Monat "].astype(str) + "-" + speed["vorfallsdatum"].astype(str).str[:2]
-speed = speed[['date', 'ueberschreitung']]
+speed = speed[['date', 'excessive_speed']]
 speed['date'] = pd.to_datetime(speed['date'])
-speed['ueberschreitung'] = pd.to_numeric(speed['ueberschreitung'], errors='coerce')
-
+speed['excessive_speed'] = pd.to_numeric(speed['excessive_speed'], errors='coerce')
 
 #-- WEATHER --#
 
@@ -52,8 +57,9 @@ speed['ueberschreitung'] = pd.to_numeric(speed['ueberschreitung'], errors='coerc
 date_range = pd.date_range(start=start_date, end=end_date, freq='D')
 weather.insert(0, 'date', date_range.strftime('%d-%m-%Y'))
 
-# Deleting all but the date and precipitation columns for the weather data
+# Dataset formatting
 weather = weather[['date', 'prcp']]
+weather['date'] = pd.to_datetime(weather['date'], format='%d-%m-%Y')
 weather['prcp'] = pd.to_numeric(weather['prcp'], errors='coerce')
 
 
