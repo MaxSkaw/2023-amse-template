@@ -25,8 +25,14 @@ jobs:
       - name: Install meteostat
         run: |
           python -m pip install --upgrade pip
-          pip install meteostat
-          
+          pip install meteostat 
+      
+      - name: Install sqlalchemy
+        run: |
+          python -m pip install --upgrade pip
+          pip install sqlalchemy
+
+      #Tests
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
