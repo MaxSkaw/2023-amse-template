@@ -1,5 +1,3 @@
 *.csv
-speed.sqlite
-weather.sqlite
-airports.sqlite
-exercises/trainstops.sqlite
+*sqlite
+exercises/*sqlite
