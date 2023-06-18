@@ -15,9 +15,9 @@ col_nums = {
     0: "date",
     1: "CIN",
     2: "name",
-    12: "petrol",
-    22: "diesel",
-    33: "gas",
+    9: "petrol",
+    19: "diesel",
+    29: "gas",
     42: "electro",
     52: "hybrid",
     62: "plugInHybrid",
@@ -43,6 +43,7 @@ df = df[df["CIN"].str.len() == 5]
 # Positive integers
 numeric_cols = df.columns.difference(["date", "CIN", "name"])
 df[numeric_cols] = df[numeric_cols].apply(pd.to_numeric, errors="coerce")
+df = df[(df[numeric_cols] > 0).all(axis=1)]
 
 
 #----------- Data Export -----------#
