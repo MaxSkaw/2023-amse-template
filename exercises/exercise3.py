@@ -1,12 +1,12 @@
 import pandas as pd
-from sqlalchemy import create_engine, Integer, Text, Float
+from sqlalchemy import create_engine, Integer, Text
 
 
 #----------- Data Source Management -----------#
 
 # Import dataset
 url = "https://www-genesis.destatis.de/genesis/downloads/00/tables/46251-0021_00.csv"
-df = pd.read_csv(url, sep=';', encoding="iso-8859-1", engine='python', skiprows=6, skipfooter=4, dtype={"unnamed: 0": str, "Unnamed: 1": str, "Unnamed: 2": str})
+df = pd.read_csv(url, sep=';', encoding="iso-8859-1", engine='python', skiprows=6, skipfooter=4, dtype={"Unnamed: 1": str})
 
 
 #----------- Data Manipulation  -----------#
@@ -25,8 +25,8 @@ col_nums = {
 }
 
 # Selection
-final_columns = [df.columns[col_idx] for col_idx in col_nums.keys()]
-df = df[final_columns]
+final_cols = [df.columns[col_idx] for col_idx in col_nums.keys()]
+df = df[final_cols]
 
 # Renaming
 df.columns = [col_nums[col_idx] for col_idx in col_nums.keys()]
