@@ -1,5 +1,5 @@
 import pandas as pd
-import sqlite3
+from sqlalchemy import create_engine, Integer, Text, Float
 
 
 #----------- Data Source Management -----------#
@@ -48,7 +48,20 @@ df = df[(df[numeric_cols] > 0).all(axis=1)]
 
 #----------- Data Export -----------#
 
-database = "cars.sqlite"
-conn = sqlite3.connect(database)
-df.to_sql("cars", conn, if_exists="replace", index=False)
-conn.close()
+column_types = {
+    "date": Text,
+    "CIN": Text,
+    "name": Text,
+    "petrol": Integer,
+    "diesel": Integer,
+    "gas": Integer,
+    "electro": Integer,
+    "hybrid": Integer,
+    "plugInHybrid": Integer,
+    "others": Integer
+}
+
+engine = create_engine('sqlite:///cars.sqlite')
+
+with engine.begin() as connection:
+    df.to_sql("cars", connection, if_exists="replace", index=False, dtype=column_types)
