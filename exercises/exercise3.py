@@ -6,7 +6,7 @@ import sqlite3
 
 # Import dataset
 url = "https://www-genesis.destatis.de/genesis/downloads/00/tables/46251-0021_00.csv"
-df = pd.read_csv(url, sep=';', encoding="iso-8859-1", engine='python', skiprows=6, skipfooter=4, dtype={"Unnamed: 1": str})
+df = pd.read_csv(url, sep=';', encoding="iso-8859-1", engine='python', skiprows=6, skipfooter=4, dtype={"unnamed: 0": str, "Unnamed: 1": str, "Unnamed: 2": str})
 
 
 #----------- Data Manipulation  -----------#
