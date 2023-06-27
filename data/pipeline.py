@@ -7,9 +7,12 @@ from meteostat import Stations, Daily
 #-- SPEED --#
 
 ### Datasource 1: Speed Monitoring Cologne
-# First datasource from URL: https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv
+# First datasource from URL: https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2022_0.csv
 
-speed = pd.read_csv('https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv', \
+# Note: Originally, data from 2017 to 2021 was utilized from the following URL: https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv
+# However, this source has been deleted or moved (see ERSTELLT 25.06.2023 at the mobilithek entry). Newly added was the data source for 2017 to 2022, therefore this is used from now on
+
+speed = pd.read_csv('https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2022_0.csv', \
     sep=';', skiprows=1, \
         names=['year','month','unformatted_date','incident_time','location_code','speed','excessive_speed','vehicle_type','location','garbage_1','garbage_2'], \
             dtype={0: int, 1: int, 2: int, 3: int, 4: str, 5: str, 6: str, 7: str, 8: str, 9: str, 10: str})
@@ -18,10 +21,10 @@ speed = pd.read_csv('https://offenedaten-koeln.de/sites/default/files/Geschwindi
 #-- WEATHER --#
 
 ### Datasource 2: Weather Review and Climate Data Cologne
-# Second datasource from URL: https://meteostat.net/de/place/de/koln?s=D2968&t=2017-01-01/2021-12-31
+# Second datasource from URL: https://meteostat.net/de/place/de/koln?s=D2968&t=2017-01-01/2022-12-31
 # We use a designated Python module instead, because there is no online download link
 
-# Alternative: Just use the downloaded data (but that would be too easy of course)
+# Alternative: Just use the downloaded data (but that would be boring)
 # weather = pd.read_csv('../weather.csv', sep=',')
 
 stations = Stations()
@@ -30,7 +33,7 @@ station = stations.fetch(1)
 station_id = station.index[0]
 
 start_date = '2017-01-01'
-end_date = '2021-12-31'
+end_date = '2022-12-31'
 
 weather = Daily(station_id, start=start_date, end=end_date)
 weather = weather.fetch()
