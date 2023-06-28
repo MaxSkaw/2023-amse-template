@@ -16,10 +16,10 @@ By examining the effects of rainfall on speeding, the research project can provi
 
 ### Datasource1: Geschwindigkeitsueberwachung Koeln
 * Metadata URL: https://mobilithek.info/offers/-8862870771136450928
-* Data URL: https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2021.csv
+* Data URL: https://offenedaten-koeln.de/sites/default/files/Geschwindigkeit%C3%BCberwachung_Koeln_Gesamt_2017-2022_0.csv
 * Data Type: CSV
 
-This dataset includes all speed monitoring data from Cologne between 2017 and 2021.
+This dataset includes all speed monitoring data from Cologne between 2017 and 2022.
 
 ### Datasource2: Wetterrückblick und Klimadaten Koeln
 * Metadata URL: https://meteostat.net/de/place/de/koln
@@ -32,15 +32,16 @@ This dataset includes all weather and precipitation data from Cologne between 20
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
-1. Extract and format data [#1][i1]
-2. Merge data sets [#2][i2]
-3. Data manipulation and correlation identification [#3][i3]
-4. Analysis of the results [#4][i4]
-5. Interpretation and summary [#5][i5]
-6. ...
+1. Find suitable data sets [#1][i1]
+2. Create a Project Plan [#2][i2]
+3. Finish an automated Data Pipeline [#3][i3]
+4. Complete Data Exploration [#4][i4]
+5. Finish Final Report [#5][i5]
+6. Finish Final Presentation [#6][i6]
 
 [i1]: https://github.com/MaxSkaw/2023-amse-template/issues/1
 [i2]: https://github.com/MaxSkaw/2023-amse-template/issues/2
 [i3]: https://github.com/MaxSkaw/2023-amse-template/issues/3
 [i4]: https://github.com/MaxSkaw/2023-amse-template/issues/4
 [i5]: https://github.com/MaxSkaw/2023-amse-template/issues/5
+[i6]: https://github.com/MaxSkaw/2023-amse-template/issues/6
