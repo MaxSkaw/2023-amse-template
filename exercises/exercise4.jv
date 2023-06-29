@@ -17,7 +17,7 @@ valuetype Aktiv oftype text {
 }
 
 constraint GeraetNumber oftype RangeConstraint  {
-  lowerBound: 0;
+  lowerBound: 1;
 }
 
 constraint MonthLength oftype RangeConstraint  {
