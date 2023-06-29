@@ -1,0 +1,116 @@
+valuetype Geraet oftype integer {
+	constraints: [
+		GeraetNumber,
+	];
+}
+
+valuetype Month oftype integer {
+	constraints: [
+		MonthLength,
+	];
+}
+
+valuetype Aktiv oftype text {
+	constraints: [
+		AktivVal,
+	];
+}
+
+constraint GeraetNumber oftype RangeConstraint  {
+  lowerBound: 0;
+}
+
+constraint MonthLength oftype RangeConstraint  {
+  lowerBound: 1;
+  upperBound: 12;
+}
+
+constraint AktivVal oftype AllowlistConstraint  {
+  allowlist: ["Ja", "Nein"];
+}
+
+transform CelsiusToFahrenheit {
+  from tempCelsius oftype decimal;
+  to tempFahrenheit oftype decimal;
+
+  tempFahrenheit: (tempCelsius * 9/5) + 32;
+}
+
+
+pipeline TemperaturePipeline {
+
+    block TemperatureFileExtractor oftype HttpExtractor {
+        url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
+    }
+
+    block TemperatureZipInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+    
+    block TemperatureFilePicker oftype FilePicker {
+      path: "/data.csv";
+    }
+
+    block TemperatureTextFileInterpreter oftype TextFileInterpreter {}
+
+    block TemperatureCSVInterpreter oftype CSVInterpreter {  
+    delimiter: ";";
+    }
+
+    block TemperatureDataSelector oftype CellRangeSelector {
+      select: range A1:K*;
+    }
+
+    block TemperatureColumnDeleter oftype ColumnDeleter {
+        delete: [column F, column G, column H, column I];
+    }
+
+    block TemperatureSequenceWriter oftype CellWriter {
+      at: range E1:F1;
+      write: ["Temperatur", "Batterietemperatur"];
+    }
+
+    block TemperatureTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+        "Geraet" oftype Geraet,
+        "Hersteller" oftype text,
+        "Model" oftype text,
+        "Monat" oftype Month,
+        "Temperatur" oftype decimal,
+        "Batterietemperatur" oftype decimal,
+        "Geraet aktiv" oftype Aktiv,
+        ];
+    }
+
+    block TempCelsiusToFahrenheitTransformer oftype TableTransformer {
+      inputColumn: 'Temperatur';
+      outputColumn: 'Temperatur';
+      use: CelsiusToFahrenheit;
+    }
+
+    block BatCelsiusToFahrenheitTransformer oftype TableTransformer {
+      inputColumn: 'Batterietemperatur';
+      outputColumn: 'Batterietemperatur';
+      use: CelsiusToFahrenheit;
+    }
+
+    block TemperatureLoader oftype SQLiteLoader {
+        table: "temperatures";
+        file: "./temperatures.sqlite";
+    }
+
+
+    TemperatureFileExtractor
+        -> TemperatureZipInterpreter
+        -> TemperatureFilePicker
+        -> TemperatureTextFileInterpreter
+        -> TemperatureCSVInterpreter
+        -> TemperatureDataSelector
+        -> TemperatureColumnDeleter
+        -> TemperatureSequenceWriter
+        -> TemperatureTableInterpreter
+        -> TempCelsiusToFahrenheitTransformer
+        -> BatCelsiusToFahrenheitTransformer
+        -> TemperatureLoader;
+}
