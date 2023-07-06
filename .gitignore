@@ -1,3 +1,4 @@
 *.csv
-*sqlite
-exercises/*sqlite
+*.sqlite
+*.zip
+*.txt
